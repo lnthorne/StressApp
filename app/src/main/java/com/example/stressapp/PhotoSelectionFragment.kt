@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
 import androidx.lifecycle.Observer
+import java.time.Instant
 
 class PhotoSelectionFragment : Fragment() {
     private lateinit var gridView: GridView
@@ -59,10 +60,12 @@ class PhotoSelectionFragment : Fragment() {
             val selectedImageResource = imageResources[position]
             Log.i("myTag", selectedImageResource.toString())
             Log.i("myTag", position.toString())
+            val time = System.currentTimeMillis()
 
             val intent = Intent(requireContext(), PhotoConfirmationActivity::class.java).apply {
                 putExtra(PhotoConfirmationActivity.IMAGE_RESOURCE_KEY, selectedImageResource)
                 putExtra(PhotoConfirmationActivity.POSITION_KEY, position)
+                putExtra(PhotoConfirmationActivity.TIMESTAMP_KEY, time)
             }
             startActivity(intent)
         }

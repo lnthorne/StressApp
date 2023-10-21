@@ -2,6 +2,8 @@ package com.example.stressapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = MyViewPageAdapter(this)
         navView = findViewById(R.id.nav_view)
-
+        StressDataController.loadEntriesFromStorage(this)
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.itStressMeter -> viewPager.setCurrentItem(0, true)
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open,

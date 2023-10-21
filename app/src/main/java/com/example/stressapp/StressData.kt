@@ -4,7 +4,7 @@ import android.content.Context
 import java.sql.Timestamp
 
 data class StressData(
-    val timestamp: Timestamp,
+    val timestamp: Long,
     val stressLevel: Int
 ) {
     fun toCsvString(): String {
@@ -14,7 +14,7 @@ data class StressData(
     companion object {
         fun fromCsvString(csvString: String): StressData {
             val parts = csvString.split(",")
-            return StressData(Timestamp(parts[0].toLong()), parts[1].toInt())
+            return StressData(parts[0].toLong(), parts[1].toInt())
         }
     }
 }
