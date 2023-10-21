@@ -1,5 +1,6 @@
 package com.example.stressapp
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +25,6 @@ class PhotoSelectionFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_photo_selection, container, false)
 
         gridView = view.findViewById(R.id.gvImageSelection)
-//        gridView.setOnTouchListener {v, event -> true}
         moreImagesBtn = view.findViewById(R.id.btnMoreImages)
 
         viewModel = ViewModelProvider(this).get(PhotoSelectionViewModel::class.java)
@@ -60,7 +60,11 @@ class PhotoSelectionFragment : Fragment() {
             Log.i("myTag", selectedImageResource.toString())
             Log.i("myTag", position.toString())
 
-            // TODO: Here, you can navigate to a new Fragment or display the selected image in fullscreen for confirmation
+            val intent = Intent(requireContext(), PhotoConfirmationActivity::class.java).apply {
+                putExtra(PhotoConfirmationActivity.IMAGE_RESOURCE_KEY, selectedImageResource)
+                putExtra(PhotoConfirmationActivity.POSITION_KEY, position)
+            }
+            startActivity(intent)
         }
     }
 
