@@ -17,18 +17,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <GridView
         android:id="@+id/gvImageSelection"
-        android:layout_width="350dp"
-        android:layout_height="507dp"
+        android:layout_width="385dp"
+        android:layout_height="522dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:numColumns="4"
         app:layout_constraintBottom_toTopOf="@+id/btnMoreImages"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
