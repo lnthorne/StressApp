@@ -33,6 +33,7 @@ class PhotoConfirmationActivity : AppCompatActivity() {
 
         submitBtn.setOnClickListener() {
             StressDataController.addEntry(this, stressData)
+            finish()
         }
 
     }
