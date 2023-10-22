@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import java.sql.Timestamp
+import kotlin.system.exitProcess
 
 class PhotoConfirmationActivity : AppCompatActivity() {
     private lateinit var image: ImageView
     private lateinit var cancelBtn: Button
     private lateinit var submitBtn: Button
 
-    private val stressData = StressDataController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_confirmation)
@@ -33,7 +33,8 @@ class PhotoConfirmationActivity : AppCompatActivity() {
 
         submitBtn.setOnClickListener() {
             StressDataController.addEntry(this, stressData)
-            finish()
+            finishAffinity()
+            exitProcess(0)
         }
 
     }

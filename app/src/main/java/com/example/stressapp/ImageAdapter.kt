@@ -1,6 +1,7 @@
 package com.example.stressapp
 
 import android.content.Context
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class ImageAdapter(private val context: Context, private val images: List<ImageR
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        Log.i("test", "This is in getview")
         val imageView: ImageView
         if (convertView == null) {
             imageView = ImageView(context)
