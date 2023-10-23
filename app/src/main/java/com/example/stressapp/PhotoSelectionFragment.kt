@@ -1,8 +1,11 @@
 package com.example.stressapp
 
 import android.content.Intent
+import android.media.AsyncPlayer
+import android.media.MediaPlayer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Vibrator
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +21,6 @@ class PhotoSelectionFragment : Fragment() {
     private lateinit var moreImagesBtn: Button
 
     private lateinit var viewModel: PhotoSelectionViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +37,11 @@ class PhotoSelectionFragment : Fragment() {
 
         moreImagesBtn.setOnClickListener() {
             viewModel.switchPage()
+            stopServices()
         }
+
+        startServices()
+
 
         return view
     }
@@ -62,6 +68,7 @@ class PhotoSelectionFragment : Fragment() {
 
         // Set the item click listener for GridView items
         gridView.setOnItemClickListener { _, _, position, _ ->
+            stopServices()
             val selectedImageResource = imageResources[position]
             Log.i("myTag", selectedImageResource.toString())
             Log.i("myTag", position.toString())
@@ -73,6 +80,26 @@ class PhotoSelectionFragment : Fragment() {
                 putExtra(PhotoConfirmationActivity.TIMESTAMP_KEY, time)
             }
             startActivity(intent)
+        }
+    }
+
+    private fun startServices() {
+        Intent(requireContext(), SoundService::class.java).also {
+            requireContext().startService(it)
+        }
+
+        Intent(requireContext(), VibrationService::class.java).also {
+            requireContext().startService(it)
+        }
+    }
+
+    private fun stopServices() {
+        Intent(requireContext(), SoundService::class.java).also {
+            requireContext().stopService(it)
+        }
+
+        Intent(requireContext(), VibrationService::class.java).also {
+            requireContext().stopService(it)
         }
     }
 
