@@ -29,7 +29,6 @@ class StressPlotFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_stress_plot, container, false)
-        Log.i("Test", "On Create view")
 
         lineChart = AnyChart.line()
         lineChart.noData().label().enabled(true)
@@ -42,8 +41,6 @@ class StressPlotFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(StressPlotViewModel::class.java)
         viewModel.stressData.observe(viewLifecycleOwner) { stressDataList ->
-            Log.i("Test", "Inside the stressData")
-            Log.i("Test", lineChart.toString())
             setChartData(stressDataList)
             setTableData(stressDataList)
         }
@@ -60,7 +57,6 @@ class StressPlotFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("Test", "On view created")
         anyChartView.setChart(lineChart)
         viewModel.fetchStressData()
     }
@@ -71,7 +67,7 @@ class StressPlotFragment : Fragment() {
             listOf(ValueDataEntry(0, 0))
         } else {
             stressDataList.mapIndexed { index, stressData ->
-                ValueDataEntry(index, stressData.stressLevel)
+                ValueDataEntry((index + 1), stressData.stressLevel)
             }
         }
         lineChart.data(chartData)

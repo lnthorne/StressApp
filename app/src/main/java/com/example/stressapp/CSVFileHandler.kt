@@ -30,9 +30,4 @@ object CSVFileHandler {
         }
         return entries
     }
-
-    fun deleteFile(context: Context) {
-        val file = File(context.filesDir, FILENAME)
-        file.delete()
-    }
 }

@@ -56,7 +56,6 @@ class PhotoSelectionFragment : Fragment() {
     }
 
     private fun loadImagesForCurrentPage() {
-        Log.i("Test", "Working in the loadImages Before")
         val arrayResourceId = viewModel.getPageImagesResourceArray()
         val typedArray = requireContext().resources.obtainTypedArray(arrayResourceId)
         val imageResources = mutableListOf<Int>()
@@ -66,12 +65,8 @@ class PhotoSelectionFragment : Fragment() {
         }
 
         typedArray.recycle()
-        Log.i("Test", "Working in the loadImages After")
-
-        // Set the adapter for the GridView using the imageResources
         gridView.adapter = ImageAdapter(requireContext(), imageResources)
 
-        // Set the item click listener for GridView items
         gridView.setOnItemClickListener { _, _, position, _ ->
             stopServices()
             val selectedImageResource = imageResources[position]

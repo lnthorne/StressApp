@@ -11,10 +11,10 @@ import android.widget.ImageView
 
 class ImageAdapter(private val context: Context, private val images: List<ImageResource>) : BaseAdapter() {
 
-    val displayMetrics = context.resources.displayMetrics
-    val gridViewWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 372f, displayMetrics).toInt()
+    private val displayMetrics = context.resources.displayMetrics
+    private val gridViewWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 372f, displayMetrics).toInt()
 
-    val imageSize = gridViewWidth / 4
+    private val imageSize = gridViewWidth / 4
     override fun getCount(): Int = images.size
 
     override fun getItem(position: Int): ImageResource = images[position]
@@ -22,7 +22,6 @@ class ImageAdapter(private val context: Context, private val images: List<ImageR
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        Log.i("test", "This is in getview")
         val imageView: ImageView
         if (convertView == null) {
             imageView = ImageView(context)
