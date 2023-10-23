@@ -7,10 +7,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <com.anychart.AnyChartView
         android:id="@+id/any_chart_view"
         android:layout_width="match_parent"
-        android:layout_height="359dp" />
+        android:layout_height="339dp"
+        android:alwaysDrawnWithCache="false"
+        android:background="#FF0000"
+        android:visibility="visible" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -42,7 +46,8 @@
 
 
         </TableLayout>
-    </ScrollView>
 
+
+    </ScrollView>
 
 </LinearLayout>

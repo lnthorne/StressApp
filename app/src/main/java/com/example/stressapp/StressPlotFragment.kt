@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
-import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Cartesian
 import java.sql.Timestamp
@@ -33,7 +32,9 @@ class StressPlotFragment : Fragment() {
         Log.i("Test", "On Create view")
 
         lineChart = AnyChart.line()
+        lineChart.noData().label().enabled(true)
         lineChart.xAxis(0).title("Instance")
+        lineChart.yScale().minimum(0).maximum(16)
         lineChart.yAxis(0).title("Stress Level")
         anyChartView = view.findViewById(R.id.any_chart_view)
 
@@ -54,19 +55,24 @@ class StressPlotFragment : Fragment() {
         Intent(requireContext(), VibrationService::class.java).also {
             requireContext().stopService(it)
         }
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Test", "On view created")
+        anyChartView.setChart(lineChart)
         viewModel.fetchStressData()
     }
 
    private fun setChartData(stressDataList: List<StressData>) {
-        val chartData = stressDataList.mapIndexed { index, stressData ->
-            ValueDataEntry(index, stressData.stressLevel)
+//       Cannot get chart to render when there is no data so setting placeholder until there is data
+        val chartData = if (stressDataList.isEmpty()) {
+            listOf(ValueDataEntry(0, 0))
+        } else {
+            stressDataList.mapIndexed { index, stressData ->
+                ValueDataEntry(index, stressData.stressLevel)
+            }
         }
         lineChart.data(chartData)
         lineChart.marker(chartData)
