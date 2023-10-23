@@ -1,5 +1,6 @@
 package com.example.stressapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -20,11 +21,6 @@ import java.sql.Timestamp
 
 
 class StressPlotFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = StressPlotFragment()
-    }
-
     private lateinit var viewModel: StressPlotViewModel
     private lateinit var anyChartView: AnyChartView
     private lateinit var table: TableLayout
@@ -51,6 +47,14 @@ class StressPlotFragment : Fragment() {
             setTableData(stressDataList)
         }
 
+        Intent(requireContext(), SoundService::class.java).also {
+            requireContext().stopService(it)
+        }
+
+        Intent(requireContext(), VibrationService::class.java).also {
+            requireContext().stopService(it)
+        }
+
         return view
     }
 
@@ -60,16 +64,17 @@ class StressPlotFragment : Fragment() {
         viewModel.fetchStressData()
     }
 
-    fun setChartData(stressDataList: List<StressData>) {
+   private fun setChartData(stressDataList: List<StressData>) {
         val chartData = stressDataList.mapIndexed { index, stressData ->
             ValueDataEntry(index, stressData.stressLevel)
         }
         lineChart.data(chartData)
+        lineChart.marker(chartData)
 
         anyChartView.setChart(lineChart)
     }
 
-    fun setTableData(stressDataList: List<StressData>) {
+    private fun setTableData(stressDataList: List<StressData>) {
         table.removeViews(1, table.childCount - 1)
 
         for (stressData in stressDataList) {

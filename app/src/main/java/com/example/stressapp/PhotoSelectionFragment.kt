@@ -21,6 +21,8 @@ class PhotoSelectionFragment : Fragment() {
     private lateinit var moreImagesBtn: Button
 
     private lateinit var viewModel: PhotoSelectionViewModel
+    private lateinit var soundService: Intent
+    private lateinit var vibrationService: Intent
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +36,9 @@ class PhotoSelectionFragment : Fragment() {
         viewModel.currentPage.observe(viewLifecycleOwner, Observer {
             loadImagesForCurrentPage()
         })
+
+        soundService = Intent(requireContext(), SoundService::class.java)
+        vibrationService = Intent(requireContext(), VibrationService::class.java)
 
         moreImagesBtn.setOnClickListener() {
             viewModel.switchPage()
@@ -56,7 +61,7 @@ class PhotoSelectionFragment : Fragment() {
         val typedArray = requireContext().resources.obtainTypedArray(arrayResourceId)
         val imageResources = mutableListOf<Int>()
 
-        for (i in 0 until typedArray.length()) {
+        for (i in 0..<typedArray.length()) {
             imageResources.add(typedArray.getResourceId(i, -1))
         }
 
@@ -84,23 +89,13 @@ class PhotoSelectionFragment : Fragment() {
     }
 
     private fun startServices() {
-        Intent(requireContext(), SoundService::class.java).also {
-            requireContext().startService(it)
-        }
-
-        Intent(requireContext(), VibrationService::class.java).also {
-            requireContext().startService(it)
-        }
+        requireContext().startService(soundService)
+        requireContext().startService(vibrationService)
     }
 
     private fun stopServices() {
-        Intent(requireContext(), SoundService::class.java).also {
-            requireContext().stopService(it)
-        }
-
-        Intent(requireContext(), VibrationService::class.java).also {
-            requireContext().stopService(it)
-        }
+        requireContext().stopService(soundService)
+        requireContext().stopService(vibrationService)
     }
 
 }
